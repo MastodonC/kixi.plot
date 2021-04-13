@@ -5,7 +5,17 @@
             [cljplot.render :as plotr]
             [clojure.string :as s]
             [kixi.plot.colors :as colors]
-            [kixi.plot.series :as series]))
+            [kixi.plot.series :as series])
+  (:import javax.imageio.ImageIO
+           java.awt.image.BufferedImage
+           java.io.ByteArrayOutputStream))
+
+(defn ->byte-array [^BufferedImage image]
+  (when image
+    (with-open [out (ByteArrayOutputStream.)]
+      (ImageIO/write image "png" out)
+      (.toByteArray out))))
+
 
 (defn zero-index-numerical-y-axes [prepped-data]
   (let [[t [_bottom top]] (get-in prepped-data [:extents :y 0])

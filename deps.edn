@@ -1,6 +1,7 @@
 {:paths ["src" "resources"]
  :deps  {org.clojure/clojure        {:mvn/version "1.10.3"}
          cljplot/cljplot            {:mvn/version "0.0.2a-SNAPSHOT"}
+         mastodonc/kixi.large       {:local/root "../kixi.large"}
          techascent/tech.ml.dataset {:mvn/version "5.15"}
          scicloj/tablecloth         {:mvn/version "5.11" :exclusions [techascent/tech.ml.dataset]}}
  :aliases
