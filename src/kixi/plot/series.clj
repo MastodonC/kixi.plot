@@ -31,7 +31,7 @@
 
 (defn ds->median-iqr-95-series
   "Takes a filtered or grouped dataset that only has a single series-name"
-  ([k ds color shape]
+  ([ds color shape]
    [(line-series {:ds ds
                   :color color
                   :shape shape
@@ -49,7 +49,7 @@
                     :alpha 25
                     :high-y :high-95
                     :low-y :low-95})])
-  ([k ds color shape dash]
+  ([ds color shape dash]
    [(line-series {:ds ds
                   :color color
                   :shape shape
@@ -81,7 +81,6 @@
                        (mapcat (fn [[group-key ds]]
                                  (let [series-name (series-key group-key)]
                                    (ds->median-iqr-95-series
-                                    series-name
                                     ds
                                     (-> series-name colors-and-shapes :color)
                                     (-> series-name colors-and-shapes :shape)))))

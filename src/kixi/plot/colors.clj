@@ -42,7 +42,11 @@
          (cycle palette)
          (cycle points))))
 
-(defn colors-and-shapes [historical-transitions]
-  (merge (domain-colors-and-shapes (into (sorted-set) (map :setting-1) historical-transitions))
-         (domain-colors-and-shapes (into (sorted-set) (map :academic-year-1) historical-transitions))
-         (domain-colors-and-shapes (into (sorted-set) (map :need-1) historical-transitions))))
+(defn colors-and-shapes [census-dataset]
+  (let [ays (into #{} (-> census-dataset :academic-year))
+        needs (into #{} (-> census-dataset :need))
+        settings (into #{} (-> census-dataset :setting))]
+    (domain-colors-and-shapes
+     (into #{}
+           cat
+           [ays needs settings]))))
