@@ -1,10 +1,10 @@
 {:paths ["src" "resources"]
- :deps  {org.clojure/clojure         {:mvn/version "1.10.3"}
-         cljplot/cljplot             {:mvn/version "0.0.2a-SNAPSHOT"}
-         github-MastodonC/kixi.large {:git/url "https://github.com/MastodonC/kixi.large"
-                                      :sha "91def0759357ac8f0cf9593c9a78d2b4a57b593d"}
-         techascent/tech.ml.dataset  {:mvn/version "5.20"}
-         scicloj/tablecloth          {:mvn/version "5.17" :exclusions [techascent/tech.ml.dataset]}}
+ :deps  {org.clojure/clojure        {:mvn/version "1.10.3"}
+         cljplot/cljplot            {:mvn/version "0.0.2a-SNAPSHOT"}
+         mastodonc/kixi.large       {:git/url "https://github.com/MastodonC/kixi.large"
+                                     :sha     "ff517138c519120724ca9c85c1c1f8081b543840"}
+         techascent/tech.ml.dataset {:mvn/version "5.20"}
+         scicloj/tablecloth         {:mvn/version "5.17" :exclusions [techascent/tech.ml.dataset]}}
  :aliases
  {:test    {:extra-paths ["test"]
             :extra-deps  {org.clojure/test.check {:mvn/version "1.1.0"}}}
