@@ -4,6 +4,7 @@
             [cljplot.core :as plot]
             [cljplot.render :as plotr]
             [clojure.string :as s]
+            [clojure2d.core :as c]
             [kixi.plot.colors :as colors]
             [kixi.plot.series :as series])
   (:import javax.imageio.ImageIO
@@ -16,6 +17,13 @@
       (ImageIO/write image "png" out)
       (.toByteArray out))))
 
+(defn add-watermark [c s]
+  (let [text-x-anchor (-  (:w c) 10)
+        text-y-anchor (- (:h c) 10)]
+    (c/with-canvas-> c
+      (c/set-color :gray)
+      (c/set-font-attributes 10 :italic)
+      (c/text s text-x-anchor text-y-anchor :right))))
 
 (defn zero-index-numerical-y-axes [prepped-data]
   (let [[t [_bottom top]] (get-in prepped-data [:extents :y 0])
@@ -153,3 +161,28 @@
                                            [:rect "90% range"
                                             {:color (colors/color :black 25)}]]
                                           legend-spec)))
+
+
+(comment
+
+
+  (let [data #_(sorted-map-by (comp - compare) :A [1 3] :B [3 8] :C [8 10])
+        [["2010" [0 3]]
+         ["Joiners" [3 12]]
+         ["Leavers" [10 12]]
+         ["2011" [0 10]]]]
+    (-> (plotb/series
+         [:grid]
+         [#_:stack-horizontal :stack-vertical [:rbar data {:padding 0.05
+                                                           :palette ["#e7ba52" "#9467bd" "#1f77b4" "#c7c7c7" "#aec7e8"]}]])
+        (plotb/preprocess-series)
+        ;;(plotb/update-scale :y :fmt name)
+        (plotb/update-scale :x :fmt str)
+        (plotb/add-axes :left)
+        (plotb/add-axes :bottom)
+        ;;(plotb/add-label :bottom "start, end")
+        ;;(plotb/add-label :left "task")
+        (plotr/render-lattice {:width 400 :height 200 :border 20})
+        (plot/show)))
+
+  )
