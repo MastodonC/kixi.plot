@@ -87,7 +87,9 @@
                              size
                              legend-label ;; new
                              legend-font-size
-                             title]
+                             title
+                             watermark]
+                     :or {watermark ""}
                      :as chart-spec}]
   (swap! cfg/configuration
          (fn [c]
@@ -112,7 +114,7 @@
                 (plotb/add-label :top (::label title) title-format)
                 (plotb/add-legend legend-label legend-spec)
                 (plotr/render-lattice size)
-                )})))
+                (add-watermark watermark))})))
 
 (defn show [plot]
   (plot/show plot))
@@ -142,24 +144,30 @@
    ::y-axis {::tick-formatter millions-formatter
              ::label          "Cost £ Million"}})
 
+(def seven-number-summary-legend-items
+  [[:line "Median/Actual"
+    {:color :black :stroke {:size 4} :font "Open Sans"}]
+   [:rect "Interquartile range"
+    {:color (colors/color :black 50)}]
+   [:rect "90% range"
+    {:color (colors/color :black 25)}]])
+
+(def seven-number-summary-legend-scenario-items
+  [[:line "Median/Actual Baseline"
+    {:color :black :stroke {:size 4} :font "Open Sans"}]
+   [:line "Median/Actual Scenario"
+    {:color :black :stroke {:size 4 :dash [6.0 3.0]} :font "Open Sans"}]
+   [:rect "Interquartile range"
+    {:color (colors/color :black 50)}]
+   [:rect "90% range"
+    {:color (colors/color :black 25)}]])
+
 (defn add-overview-legend-items [{::series/keys [legend-spec] :as chart}]
-  (assoc chart ::series/legend-spec (into [[:line "Median/Actual"
-                                            {:color :black :stroke {:size 4} :font "Open Sans"}]
-                                           [:rect "Interquartile range"
-                                            {:color (colors/color :black 50)}]
-                                           [:rect "90% range"
-                                            {:color (colors/color :black 25)}]]
+  (assoc chart ::series/legend-spec (into seven-number-summary-legend-items
                                           legend-spec)))
 
 (defn add-scenario-overview-legend-items [{::series/keys [legend-spec] :as chart}]
-  (assoc chart ::series/legend-spec (into [[:line "Median/Actual Baseline"
-                                            {:color :black :stroke {:size 4} :font "Open Sans"}]
-                                           [:line "Median/Actual Scenario"
-                                            {:color :black :stroke {:size 4 :dash [6.0 3.0]} :font "Open Sans"}]
-                                           [:rect "Interquartile range"
-                                            {:color (colors/color :black 50)}]
-                                           [:rect "90% range"
-                                            {:color (colors/color :black 25)}]]
+  (assoc chart ::series/legend-spec (into seven-number-summary-legend-scenario-items
                                           legend-spec)))
 
 

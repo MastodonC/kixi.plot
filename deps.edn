@@ -3,8 +3,8 @@
          cljplot/cljplot            {:mvn/version "0.0.2a-SNAPSHOT"}
          mastodonc/kixi.large       {:git/url "https://github.com/MastodonC/kixi.large"
                                      :sha     "ff517138c519120724ca9c85c1c1f8081b543840"}
-         techascent/tech.ml.dataset {:mvn/version "5.20"}
-         scicloj/tablecloth         {:mvn/version "5.17" :exclusions [techascent/tech.ml.dataset]}}
+         techascent/tech.ml.dataset {:mvn/version "6.00-beta-16"} #_{:mvn/version "5.20"}
+         scicloj/tablecloth         {:mvn/version "6.00-beta-16" :exclusions [techascent/tech.ml.dataset]}}
  :aliases
  {:test    {:extra-paths ["test"]
             :extra-deps  {org.clojure/test.check {:mvn/version "1.1.0"}}}
