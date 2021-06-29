@@ -26,7 +26,7 @@
 (def blue (nth (color/palette :tableau-20) 5))
 (def green (nth (color/palette :tableau-20) 4))
 (def white (color/color :white))
-(def palette (color/palette :tableau-20))
+(def tableau-20-palette (color/palette :tableau-20))
 (def points [\V \\
              \^ \|
              \O \/
@@ -36,7 +36,6 @@
              \{ \s
              \< \}
              \-])
-
 
 (defn legend-shape [s]
   (case s
@@ -48,20 +47,14 @@
     \/ \\
     s))
 
-(defn domain-colors-and-shapes [domain]
-  (into {}
-        (sequence
-         (map (fn [d c s]
-                [d {:color c :shape s :legend-shape (legend-shape s)}]))
-         domain
-         (cycle palette)
-         (cycle points))))
-
-(defn colors-and-shapes [census-dataset]
-  (let [ays (into #{} (-> census-dataset :academic-year))
-        needs (into #{} (-> census-dataset :need))
-        settings (into #{} (-> census-dataset :setting))]
-    (domain-colors-and-shapes
-     (into #{}
-           cat
-           [ays needs settings]))))
+(defn domain-colors-and-shapes
+  ([domain palette]
+   (into {}
+         (sequence
+          (map (fn [d c s]
+                 [d {:color c :shape s :legend-shape (legend-shape s)}]))
+          domain
+          (cycle palette)
+          (cycle points))))
+  ([domain]
+   (domain-colors-and-shapes domain tableau-20-palette)))
