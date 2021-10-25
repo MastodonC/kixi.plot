@@ -1,5 +1,6 @@
 (ns kixi.plot.series
-  (:require [kixi.plot.colors :as colors]
+  (:require [hyperfiddle.rcf :as rcf]
+            [kixi.plot.colors :as colors]
             [tablecloth.api :as tc]))
 
 (defn line-series [{:keys [ds x y color shape stroke size dash]
@@ -139,7 +140,7 @@
         (map (fn [m]
                (-> m
                    ((fn [[k ds]] {:series-name (series-key k)
-                                  :ds ds}))
+                                 :ds ds}))
                    ((fn [{:keys [series-name] :as m}] (merge m (colors-and-shapes series-name))))
                    (assoc :x x-key :y y-key)
                    ((fn [m] (merge m (ds->line-and-shape-legend m))))
@@ -147,3 +148,56 @@
         (-> ds
             (tc/group-by [series-key])
             (tc/groups->map))))
+
+(rcf/tests
+
+  ;; I get really intersting errors if I leave the color in
+  "legend-spec"
+  (-> (legend-spec "Foo" colors/mc-orange \^) ;; [:shape "Foo" {:color #vec4 [250.0, 129.0, 76.0, 255.0], :shape \^, :size 15, :stroke {:size 4.0}}]
+      (update-in [2] dissoc :color))
+  := [:shape "Foo" {:shape \^, :size 15, :stroke {:size 4.0}}]
+
+  "line-series"
+  (-> (line-series {:ds (tc/dataset {:calendar-year [0 1 2] :median [0 1 2]})
+                    :x :calendar-year
+                    :y :median
+                    :shape \^}) ;; [:line [[0 0] [1 1] [2 2]] {:color #vec4 [31.0, 119.0, 180.0, 255.0], :point {:type \^, :size 15, :stroke {:size 4}}, :stroke {:size 4}}]
+      (update-in [2] dissoc :color))
+  := [:line [[0 0] [1 1] [2 2]] {:point {:type \^, :size 15, :stroke {:size 4}}, :stroke {:size 4}}]
+
+  "ribbon-series"
+  (-> (ribbon-series {:ds (tc/dataset {:calendar-year [2021 2022 2023]
+                                       :q1 [0 1 2]
+                                       :q3 [1 2 3]})
+                      :x :calendar-year
+                      :low-y :q1
+                      :high-y :q3})
+      (update-in [2] dissoc :color))
+  ;; [:ci [[[2021 1] [2022 2] [2023 3]]
+  ;;       [[2021 0] [2022 1] [2023 2]]]
+  ;;  {:color #vec4 [31.0, 119.0, 180.0, 50.0]}]
+  := [:ci [[[2021 1] [2022 2] [2023 3]] [[2021 0] [2022 1] [2023 2]]] {}]
+
+  (into []
+        (map (fn [s] (update s 2 dissoc :color)))
+        (ds->median-iqr-95-series (tc/dataset {:calendar-year [2021 2022 2023]
+                                               :low-95 [0 0 0]
+                                               :q1 [0 1 2]
+                                               :median [1 2 3]
+                                               :q3 [2 3 4]
+                                               :high-95 [3 4 5]})
+                                  colors/orange
+                                  \o))
+  ;; [[:line [[2021 1] [2022 2] [2023 3]]
+  ;;   {:color #vec4 [255.0, 127.0, 14.0, 255.0], :point {:type \o, :size 15, :stroke {:size 4}}, :stroke {:size 4}}]
+  ;;  [:ci [[[2021 2] [2022 3] [2023 4]]
+  ;;        [[2021 0] [2022 1] [2023 2]]]
+  ;;   {:color #vec4 [255.0, 127.0, 14.0, 50.0]}]
+  ;;  [:ci [[[2021 3] [2022 4] [2023 5]]
+  ;;        [[2021 0] [2022 0] [2023 0]]]
+  ;;   {:color #vec4 [255.0, 127.0, 14.0, 25.0]}]]
+  := [[:line [[2021 1] [2022 2] [2023 3]] {:point {:type \o, :size 15, :stroke {:size 4}}, :stroke {:size 4}}]
+      [:ci [[[2021 2] [2022 3] [2023 4]] [[2021 0] [2022 1] [2023 2]]] {}]
+      [:ci [[[2021 3] [2022 4] [2023 5]] [[2021 0] [2022 0] [2023 0]]] {}]]
+
+  )
