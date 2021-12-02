@@ -1,12 +1,12 @@
 {:paths ["src" "resources"]
- :deps {org.clojure/clojure  {:mvn/version "1.10.3"}
-        cljplot/cljplot      {:mvn/version "0.0.2a-SNAPSHOT"}
-        hyperfiddle/rcf      {:git/url "https://github.com/hyperfiddle/rcf.git"
-                              :sha "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
-        mastodonc/kixi.large {:local/root "../kixi.large"}
-        #_{:git/url "https://github.com/MastodonC/kixi.large"
-           :sha     "06b7827cef89ef6324582cf767339b3812a01f43"}
-        ;; techascent/tech.ml.dataset {:mvn/version "6.005"}
-        ;; techascent/tech.ml.dataset {:mvn/version "6.006"}
-        scicloj/tablecloth   {:mvn/version "6.023"
-                              :exclusions [#_techascent/tech.ml.dataset org.apache.poi/poi-ooxml-schemas]}}}
+ :deps  {org.clojure/clojure        {:mvn/version "1.10.3"}
+         cljplot/cljplot            {:mvn/version "0.0.2a-SNAPSHOT"}
+         hyperfiddle/rcf            {:git/url "https://github.com/hyperfiddle/rcf.git"
+                                     :sha     "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
+         mastodonc/kixi.large       {:local/root "../kixi.large"}
+         techascent/tech.ml.dataset {:mvn/version "6.031"}
+         scicloj/tablecloth         {:mvn/version "6.031"
+                                     :exclusions  [#_techascent/tech.ml.dataset
+                                                   org.apache.poi/poi-ooxml-schemas
+                                                   org.apache.poi/poi
+                                                   org.apache.poi/poi-ooxml]}}}
