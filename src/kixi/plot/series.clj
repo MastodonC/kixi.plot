@@ -70,6 +70,41 @@
                     :high-y :high-95
                     :low-y :low-95})]))
 
+(defn ds->line-and-double-ribbon
+  [ds {:keys [color shape
+              x
+              line-y
+              stroke size
+              ribbon-1-high-y ribbon-1-low-y
+              ribbon-2-high-y ribbon-2-low-y]
+       :or {stroke 4.0
+            size 15.0}
+       :as config}]
+  (try
+    (let [ds (-> ds
+                 (tc/order-by [x]))]
+      [(line-series {:ds ds
+                     :color color
+                     :shape shape
+                     :stroke stroke
+                     :size size
+                     :x x
+                     :y line-y})
+       (ribbon-series {:ds ds
+                       :x x
+                       :color color
+                       :alpha 50
+                       :high-y ribbon-1-high-y
+                       :low-y ribbon-1-low-y})
+       (ribbon-series {:ds ds
+                       :x x
+                       :color color
+                       :alpha 25
+                       :high-y ribbon-2-high-y
+                       :low-y ribbon-2-low-y})])
+    (catch Exception e
+      (throw (ex-info "Failed to create line and double ribbon" config e)))))
+
 (defn legend-spec [series-name color shape]
   [:shape series-name
    {:color  color

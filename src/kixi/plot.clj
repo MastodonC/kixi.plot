@@ -94,9 +94,11 @@
                              size
                              legend-label ;; new
                              legend-font-size
+                             axis-font-size
                              title
                              watermark]
-                     :or {watermark ""}
+                     :or {watermark ""
+                          axis-font-size 18}
                      :as chart-spec}]
   (swap! cfg/configuration
          (fn [c]
@@ -114,8 +116,8 @@
                 (plotb/update-scale :y :fmt (::tick-formatter y-axis))
                 (zero-index-numerical-y-axes)
                 (update-chart-y-axis-ticks series)
-                (plotb/add-axes :bottom {:ticks {:font-size 24 :font-style nil}})
-                (plotb/add-axes :left {:ticks {:font-size 24 :font-style nil}})
+                (plotb/add-axes :bottom {:ticks {:font-size axis-font-size :font-style nil}})
+                (plotb/add-axes :left {:ticks {:font-size axis-font-size :font-style nil}})
                 (plotb/add-label :bottom (::label x-axis) {:font-size 36 :font "Open Sans" :font-style nil})
                 (plotb/add-label :left (::label y-axis) {:font-size 36 :font "Open Sans" :font-style nil})
                 (plotb/add-label :top (::label title) title-format)
@@ -129,11 +131,14 @@
                                size
                                legend-label ;; new
                                legend-font-size
+                               axis-font-size
                                title
                                watermark
                                bottom
                                top]
-                       :or {watermark ""}
+                       :or {watermark ""
+                            bottom 0
+                            axis-font-size 18}
                        :as chart-spec}]
   (swap! cfg/configuration
          (fn [c]
@@ -151,8 +156,8 @@
                 (plotb/update-scale :y :fmt (::tick-formatter y-axis))
                 (stated-numerical-y-axis {::bottom bottom ::top top})
                 (update-chart-y-axis-ticks series)
-                (plotb/add-axes :bottom {:ticks {:font-size 24 :font-style nil}})
-                (plotb/add-axes :left {:ticks {:font-size 24 :font-style nil}})
+                (plotb/add-axes :bottom {:ticks {:font-size axis-font-size :font-style nil}})
+                (plotb/add-axes :left {:ticks {:font-size axis-font-size :font-style nil}})
                 (plotb/add-label :bottom (::label x-axis) {:font-size 36 :font "Open Sans" :font-style nil})
                 (plotb/add-label :left (::label y-axis) {:font-size 36 :font "Open Sans" :font-style nil})
                 (plotb/add-label :top (::label title) title-format)
