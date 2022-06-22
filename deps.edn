@@ -6,7 +6,7 @@
                                      :sha     "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
          mastodonc/kixi.large       {:local/root "../kixi.large"}
          techascent/tech.ml.dataset {:mvn/version "6.077"}
-         scicloj/tablecloth         {:mvn/version "6.076"
+         scicloj/tablecloth         {:mvn/version "6.090"
                                      :exclusions  [techascent/tech.ml.dataset
                                                    org.apache.poi/poi-ooxml-schemas
                                                    org.apache.poi/poi
