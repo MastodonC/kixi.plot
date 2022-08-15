@@ -4,7 +4,6 @@
          cljplot/cljplot                                {:mvn/version "0.0.2a-SNAPSHOT"}
          hyperfiddle/rcf                                {:git/url "https://github.com/hyperfiddle/rcf.git"
                                                          :sha     "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
-         mastodonc/kixi.large                           {:local/root "../kixi.large"}
          techascent/tech.ml.dataset                     {:mvn/version "6.090"}
          scicloj/tablecloth                             {:mvn/version "6.090"
                                                          :exclusions  [techascent/tech.ml.dataset
