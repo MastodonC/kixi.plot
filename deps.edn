@@ -4,8 +4,8 @@
          cljplot/cljplot                                {:mvn/version "0.0.2a-SNAPSHOT"}
          hyperfiddle/rcf                                {:git/url "https://github.com/hyperfiddle/rcf.git"
                                                          :sha     "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
-         techascent/tech.ml.dataset                     {:mvn/version "6.093"}
-         scicloj/tablecloth                             {:mvn/version "6.090"
+         techascent/tech.ml.dataset                     {:mvn/version "6.098"}
+         scicloj/tablecloth                             {:mvn/version "6.094.1"
                                                          :exclusions  [techascent/tech.ml.dataset
                                                                        org.apache.poi/poi-ooxml-schemas
                                                                        org.apache.poi/poi
