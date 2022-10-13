@@ -37,15 +37,19 @@
              \< \}
              \-])
 
-(defn legend-shape [s]
-  (case s
-    \^ \v
-    \A \V
-    \v \^
-    \V \A
-    \\ \/
-    \/ \\
-    s))
+(def legend-shapes
+  "Map matching vertically asymmetric shapes to their vertically reflected counterpart to use in legends"
+  {\^ \v
+   \A \V
+   \v \^
+   \V \A
+   \\ \/
+   \/ \\})
+
+(defn legend-shape
+  "Given shape `s`, returns vertically reflected counterpart to use in legend, looked up in map `m` (default legend-shapes)"
+  ([s] (legend-shape s legend-shapes))
+  ([s m] (get m s s)))
 
 (defn domain-colors-and-shapes
   ([domain palette]
