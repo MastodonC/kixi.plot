@@ -4,8 +4,8 @@
          cljplot/cljplot                                {:mvn/version "0.0.2a-SNAPSHOT"}
          hyperfiddle/rcf                                {:git/url "https://github.com/hyperfiddle/rcf.git"
                                                          :sha     "f723cae54e9b7540adfcd34fa99cf138995ff5e5"}
-         techascent/tech.ml.dataset                     {:mvn/version "6.102"}
-         scicloj/tablecloth                             {:mvn/version "6.101"
+         techascent/tech.ml.dataset                     {:mvn/version "7.000-beta-51"}
+         scicloj/tablecloth                             {:mvn/version "7.000-beta-38"
                                                          :exclusions  [techascent/tech.ml.dataset
                                                                        org.apache.poi/poi-ooxml-schemas
                                                                        org.apache.poi/poi
@@ -15,4 +15,4 @@
          org.apache.hadoop/hadoop-common                {:mvn/version "3.3.0"
                                                          :exclusions  [org.slf4j/slf4j-log4j12]}
          org.apache.hadoop/hadoop-mapreduce-client-core {:mvn/version "3.3.0"
-                                                         :exclusions  [org.slf4j/slf4j-log4j12]}}}
+                                                         :exclusions  [org.slf4j/slf4j-log4j12]}}
